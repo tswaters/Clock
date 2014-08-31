@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Date Format Settings</title>
+    <script src="/js/settings.js"></script>
+</head>
+<body>
+    <div id="dateFormatSettings" 
+         data-win-control="WinJS.UI.SettingsFlyout" 
+         data-win-options="{settingsCommandId:'settings'}">
+        <div class="win-ui-dark win-header">
+            <button type="button" onclick="WinJS.UI.SettingsFlyout.show()" class="win-backbutton"></button>
+            <div class="win-label">Clock Settings</div>
+        </div>
+
+        <div class="win-content">
+            <div class="win-settings-section">
+                <h3>Date Formats</h3>
+
+                <label for="txtDateFormat">Date Format</label>
+                <input id="txtDateFormat" type="text" aria-label="Enter Date Format" />
+
+                <label for="txtTimeFormat">Time Format</label>
+                <input id="txtTimeFormat" type="text" aria-label="Enter Time Format" />
+
+            </div>
+
+            <div class="win-settings-section">
+                <button id="btnSave">Save</button>
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+</html>
