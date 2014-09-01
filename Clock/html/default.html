@@ -9,13 +9,30 @@
     <script src="//Microsoft.WinJS.2.0/js/ui.js"></script>
     <script src="/js/vendor/moment.min.js"></script>
     <script src="/js/default.js"></script>
+    <script src="/js/navigator.js"></script>
+    <script src="/js/classes/settings.js"></script>
+    <script src="/js/classes/clock.js"></script>
 </head>
 <body>
-    <div data-win-control="WinJS.UI.ViewBox">
-        <div id="clock">
-            <div id="date"></div>
-            <div id="time"></div>
-        </div>
+    <div id="contenthost" data-win-control="Application.PageControlNavigator"
+         data-win-options="{home: '/html/clock.html'}"></div>
+    <div id="appBar" data-win-control="WinJS.UI.AppBar" data-win-options="">
+        <button data-win-control="WinJS.UI.AppBarCommand"
+                data-win-options="{
+                        id:'cmdDateFormatSettings',
+                        label: 'Date Formats',
+                        icon:'settings',
+                        section:'global',
+                        tooltip:'Date Formats'
+                    }"></button>
+        <button class="icon-paint" data-win-control="WinJS.UI.AppBarCommand"
+                data-win-options="{
+                        id:'cmdColorSettings',
+                        label: 'Color Settings',
+                        icon:'color',
+                        section:'global',
+                        tooltip:'Color Settings'
+                    }"></button>
     </div>
 </body>
 </html>

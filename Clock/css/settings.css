@@ -1,0 +1,23 @@
+﻿
+/* colorpicker overrides */
+.colorPicker { margin-left: 0; margin-right: 0; }
+.colorPicker .twod, .colorPicker .twod .bg { width: 95px; height: 100px; }
+.colorPicker .oned, .colorPicker .oned .bg { height: 100px; }
+.colorPicker .oned, .colorPicker .oned .bg, .colorPicker .oned .pointer .shape { width: 20px; }
+
+
+/* default styles from dark-ui are trolling me.*/
+.colorPicker .extras label {
+    display: inline !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.colorPicker .extras .colorFields input {
+    width: 40px !important;
+    margin: 0 0 0 0.5em !important;
+    padding: 0 !important;
+}
+
+.colorPicker .extras .hex input {
+    width: 80px !important;
+}
