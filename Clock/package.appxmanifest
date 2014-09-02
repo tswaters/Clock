@@ -15,8 +15,15 @@
   </Resources>
   <Applications>
     <Application Id="App" StartPage="html/default.html">
-      <m2:VisualElements DisplayName="Clock" Description="Clock" ForegroundText="light" BackgroundColor="#464646" Square150x150Logo="images\Logo.png" Square30x30Logo="images\SmallLogo.png">
+      <m2:VisualElements DisplayName="Clock" Description="Clock" ForegroundText="light" BackgroundColor="#464646" Square150x150Logo="images\squarelogomedium.png" Square30x30Logo="images\squarelogosmall.png" ToastCapable="false">
+        <m2:DefaultTile Wide310x150Logo="images\widelogo.png" Square310x310Logo="images\squarelogolarge.png">
+        </m2:DefaultTile>
+        <m2:LockScreen Notification="badgeAndTileText" BadgeLogo="images\badgeicon.png" />
         <m2:SplashScreen Image="images\splashscreen.png" />
+        <m2:InitialRotationPreference>
+          <m2:Rotation Preference="landscape" />
+          <m2:Rotation Preference="landscapeFlipped" />
+        </m2:InitialRotationPreference>
       </m2:VisualElements>
     </Application>
   </Applications>
