@@ -2,10 +2,13 @@
     "use strict";
 
     var activation = Windows.ApplicationModel.Activation;
+    var background = Windows.ApplicationModel.Background;
     var app = WinJS.Application;
     var nav = WinJS.Navigation;
     var sched = WinJS.Utilities.Scheduler;
     var ui = WinJS.UI;
+
+    
 
     var page = ui.Pages.define("/html/default.html", {
         ready: function () {
@@ -38,6 +41,18 @@
                 // Application has been reactivated from suspension.
             }
             
+            // register the background tasks.
+            background.BackgroundExecutionManager.requestAccessAsync().then(function (status) {
+                if (status === background.BackgroundAccessStatus.allowedMayUseActiveRealTimeConnectivity
+                    || status === background.BackgroundAccessStatus.allowedWithAlwaysOnRealTimeConnectivity) {
+                    TaskHandler.registerTasks();
+                }
+            });
+            
+            BackgroundTask.Notification.updateTileAsync();
+
+            //TileNotification.updateTile();
+
             nav.history = app.sessionState.history || {};
             nav.history.current.initialPlaceholder = true;
 
