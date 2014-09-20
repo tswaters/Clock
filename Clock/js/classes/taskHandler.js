@@ -12,7 +12,6 @@
 
         'registerTasks': function () {
             // register the background tasks
-            var trigger  = 
             this.register(this.TIMER_TASK_NAME, this.TASK_ENTRY_POINT, this.TIMER_TASK_TRIGGER);
             this.register(this.USERPRESENT_TASK_NAME, this.TASK_ENTRY_POINT, this.USERPRESENT_TASK_TRIGGER);
         },

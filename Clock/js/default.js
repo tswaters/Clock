@@ -49,7 +49,7 @@
                 }
             });
             
-            BackgroundTask.Notification.updateTileAsync();
+            BackgroundTask.Notification.addTilesToScheduleAsync(new Date(), 15);
 
             //TileNotification.updateTile();
 

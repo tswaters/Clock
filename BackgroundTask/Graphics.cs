@@ -30,20 +30,14 @@ namespace BackgroundTask
         /// <param name="height">Height of the generated memory stream.</param>
         /// <param name="width">Width of the generated memory stream.</param>
         /// <returns><see cref="MemoryStream"/></returns>
-        public static MemoryStream GetMemoryStream(Windows.UI.Notifications.TileTemplateType t)
+        public static MemoryStream GetMemoryStream(Windows.UI.Notifications.TileTemplateType t, DateTimeOffset dateFor)
         {
 
-            Guid _pixelFormat = WicPixelFormat.Format32bppBGR;
-            ImagingFactory _wicFactory;
-            DDDFactory _dddFactory;
-            DWFactory _dwFactory;
-            RenderTargetProperties _renderTargetProperties;
-
-            _pixelFormat = WicPixelFormat.Format32bppBGR;
-            _wicFactory = new ImagingFactory();
-            _dddFactory = new SharpDX.Direct2D1.Factory();
-            _dwFactory = new SharpDX.DirectWrite.Factory();
-            _renderTargetProperties = new RenderTargetProperties(RenderTargetType.Default, new D2DPixelFormat(Format.Unknown, AlphaMode.Unknown), 0, 0, RenderTargetUsage.None, FeatureLevel.Level_DEFAULT);
+            var _pixelFormat = WicPixelFormat.Format32bppBGR;
+            var _wicFactory = new ImagingFactory();
+            var _dddFactory = new SharpDX.Direct2D1.Factory();
+            var _dwFactory = new SharpDX.DirectWrite.Factory();
+            var _renderTargetProperties = new RenderTargetProperties(RenderTargetType.Default, new D2DPixelFormat(Format.Unknown, AlphaMode.Unknown), 0, 0, RenderTargetUsage.None, FeatureLevel.Level_DEFAULT);
             
             int width;
             int height;
@@ -98,8 +92,8 @@ namespace BackgroundTask
             // draw to the bitmap.
             _renderTarget.BeginDraw();
             _renderTarget.Clear(backColor);
-            _renderTarget.DrawText(getDateString("date"), dateFormat, dateLocation, textBrush);
-            _renderTarget.DrawText(getDateString("time"), timeFormat, timeLocation, textBrush);
+            _renderTarget.DrawText(getDateString("date", dateFor), dateFormat, dateLocation, textBrush);
+            _renderTarget.DrawText(getDateString("time", dateFor), timeFormat, timeLocation, textBrush);
             _renderTarget.EndDraw();
 
             // return a memory stream with the encoding in it.
@@ -110,7 +104,7 @@ namespace BackgroundTask
             var frameEncoder = new BitmapFrameEncode(encoder);
             frameEncoder.Initialize();
             frameEncoder.SetSize(width, height);
-            Guid pixelFormatGuid = WicPixelFormat.FormatDontCare;
+            var pixelFormatGuid = WicPixelFormat.FormatDontCare;
             frameEncoder.SetPixelFormat(ref pixelFormatGuid);
             frameEncoder.WriteSource(_wicBitmap);
             frameEncoder.Commit();
@@ -171,17 +165,17 @@ namespace BackgroundTask
         /// </summary>
         /// <param name="type">Format to use (expecting "date" or "time")</param>
         /// <returns>Formatted string (with ordinal for dates!)</returns>
-        private static string getDateString(string type)
+        private static string getDateString(string type, DateTimeOffset forTime)
         {
-            DateTime now = DateTime.Now;//new DateTime(2009, 9, 30); 
-            string formatString = String.Empty;
+            //DateTime now = DateTime.Now;//new DateTime(2009, 9, 30); 
+            var formatString = String.Empty;
             switch (type)
             {
                 case "date":
-                    formatString = String.Format(now.ToString("dddd MMMM {0}, yyyy"), getOrdinal(now.Day));
+                    formatString = String.Format(forTime.ToString("dddd MMMM {0}, yyyy"), getOrdinal(forTime.Day));
                     break;
                 case "time":
-                    formatString = now.ToString("h:mm tt");
+                    formatString = forTime.ToString("h:mm tt");
                     break;
                 default:
                     throw new ArgumentException("Invalid type passed to getDateString.");
@@ -196,7 +190,7 @@ namespace BackgroundTask
         /// <returns>Day with ordinal (e.g. 1st)</returns>
         private static string getOrdinal(int number)
         {
-            string ordinal = String.Empty;
+            var ordinal = String.Empty;
             switch (number % 100)
             {
                 case 11:
