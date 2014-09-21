@@ -4,20 +4,19 @@
     var background = Windows.ApplicationModel.Background;
     
     WinJS.Namespace.define("TaskHandler", {
-        'USERPRESENT_TASK_NAME': 'ClockBackgroundTask_UserPresent',
-        'USERPRESENT_TASK_TRIGGER': new background.SystemTrigger(background.SystemTriggerType.userPresent, false),
-        'TIMER_TASK_NAME': 'ClockBackgroundTask_Timer',
-        'TIMER_TASK_TRIGGER': new background.TimeTrigger(15, false),
-        'TASK_ENTRY_POINT': 'BackgroundTask.Tasks',
-
-        'registerTasks': function () {
-            // register the background tasks
-            this.register(this.TIMER_TASK_NAME, this.TASK_ENTRY_POINT, this.TIMER_TASK_TRIGGER);
-            this.register(this.USERPRESENT_TASK_NAME, this.TASK_ENTRY_POINT, this.USERPRESENT_TASK_TRIGGER);
+        'taskEntryPoint': 'BackgroundTask.Tasks',
+        'tasks': {
+            'ClockBackgroundTask_TimeZoneChange': new background.SystemTrigger(background.SystemTriggerType.timeZoneChange, false),
+            'ClockBackgroundTask_SessionConnected': new background.SystemTrigger(background.SystemTriggerType.sessionConnected, false),
+            'ClockBackgroundTask_UserPresent': new background.SystemTrigger(background.SystemTriggerType.userPresent, false),
+            'ClockBackgroundTask_Timer': new background.TimeTrigger(15, false)
         },
-
+        'registerTasks': function () {
+            for (var task in this.tasks) {
+                this.register(task, this.taskEntryPoint, this.tasks[task]);
+             }
+        },
         'register': function (taskName, taskEntryPoint, trigger) {
-
             // ensure this task has not already been registered. if it has, return the task.
             var iter = background.BackgroundTaskRegistration.allTasks.first();
             var hascur = iter.hasCurrent;
@@ -32,9 +31,6 @@
             builder.setTrigger(trigger);
             return builder.register();
         }
-
     });
-
-
 })();
 
