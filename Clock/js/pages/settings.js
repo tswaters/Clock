@@ -28,6 +28,11 @@
             // set up binding.
             binding.processAll(element, this.binding);
 
+            // After the flyout closes, ensure live tiles are updated to reflect changes to settings.
+            document.getElementById('generalSettings').addEventListener('afterhide', function () {
+                BackgroundTask.Notification.addTilesToScheduleAsync(new Date(), 15);
+            });
+
             // add change handlers to the clock type inputs.
             util.id("rdoClockType[analog]").listen("change", this._rdoClockTypeAnalog_change.bind(this));
             util.id("rdoClockType[digital]").listen("change", this._rdoClockTypeDigital_change.bind(this));
