@@ -28,11 +28,6 @@
 
     app.addEventListener('activated', function (args) {
         if (args.detail.kind === activation.ActivationKind.launch) {
-            if (args.detail.previousExecutionState !== activation.ApplicationExecutionState.terminated) {
-                // Application has been newly launched. 
-            } else {
-                // Application has been reactivated from suspension.
-            }
             
             // if the user grants access to use background tasks and lock screen, register the tasks.
             background.BackgroundExecutionManager.requestAccessAsync().then(function (status) {
@@ -45,15 +40,10 @@
             // perform an immediete update to the live tile.
             BackgroundTask.Notification.addTilesToScheduleAsync(new Date(), 15);
             
-            nav.history = app.sessionState.history || {};
-            nav.history.current.initialPlaceholder = true;
-
-            var navLocation = Settings.showAnalog ? "/html/analog.html" : "/html/digital.html";
-
             // Optimize the load of the application and while the splash screen is shown, execute high priority scheduled work.
             ui.disableAnimations();
             var p = ui.processAll().then(function () {
-                return nav.navigate(navLocation, nav.state);
+                return nav.navigate(Settings.showAnalog ? "/html/analog.html" : "/html/digital.html", nav.state);
             }).then(function () {
                 return sched.requestDrain(sched.Priority.aboveNormal + 1);
             }).then(function () {
