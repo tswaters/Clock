@@ -5,98 +5,58 @@
     <link rel="stylesheet" href="/css/colorjoe.css" />
     <link rel="stylesheet" href="/css/settings.css" />
     <script src="/js/vendor/colorpicker.min.js"></script>
-    <script src="/js/classes/moment-options.js"></script>
     <script src="/js/pages/settings.js"></script>
 </head>
 <body>
 
-    <div data-win-control="WinJS.UI.SettingsFlyout" data-win-options="{settingsCommandId:'dateFormatSettings'}">
+    <div data-win-control="WinJS.UI.SettingsFlyout" data-win-options="{settingsCommandId:'generalSettings'}">
         <div class="win-ui-dark win-header">
             <button type="button" onclick="WinJS.UI.SettingsFlyout.show()" class="win-backbutton"></button>
-            <div class="win-label">Formats</div>
+            <div class="win-label">General Settings</div>
         </div>
-        <div class="win-ui-dark win-content">
+        <div class="win-content">
             <div class="win-settings-section">
+                <button id="btnDefaults">Restore Defaults</button>
 
-                <button id="btnFormatDefaults">Restore Defaults</button>
+                <h2>Clock Type</h2>
+                <label><input type="radio" data-win-bind="checked: showAnalog" name="rdoClockType" id="rdoClockType[analog]" /> Analog</label>
+                <label><input type="radio" data-win-bind="checked: showDigital" name="rdoClockType" id="rdoClockType[digital]" /> Digital</label>
+            
+                <div data-win-bind="style.display: showAnalog Converters.visibility">
+                    <h3>Analog Settings</h3>
+                    <h4>Hand Color</h4>
+                    <div id="colorPicker-analogHandColor"></div>
+                    
+                    <h4>Tick Color</h4>
+                    <div id="colorPicker-analogTickColor"></div>
 
-                <label for="txtDateFormat">Time Formats</label>
-                <input id="txtDateFormat" data-win-bind="value: dateFormat" type="text" aria-label="Enter Date Format" />
+                    <h4>Back Color</h4>
+                    <div id="colorPicker-analogBackColor"></div>
+                </div>
 
-                <button id="btnDateLegend">Show Legend</button>
-                <table id="tblDateLegend" class="hidden">
-                    <caption>Legend</caption>
-                    <thead>
-                        <tr>
-                            <td>Key</td>
-                            <td>Name</td>
-                            <td>Sample</td>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <td colspan="3">
-                                <p>Note - moment is used for formatting, this is a small sample of available formats, see <a href="http://momentjs.com/docs/#/displaying/format/">MomentJS docs</a></p>
-                            </td>
-                        </tr>
-                    </tfoot>
-                    <tbody class="table-body" data-win-control="WinJS.UI.Repeater" data-win-options="{data: MomentOptions.date}">
-                        <tr class="table-body-row">
-                            <td data-win-bind="textContent: key"></td>
-                            <td data-win-bind="textContent: name"></td>
-                            <td data-win-bind="textContent: sample"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div data-win-bind="style.display: showDigital Converters.visibility">
 
-                <label for="txtTimeFormat">Time Format</label>
-                <input id="txtTimeFormat" data-win-bind="value: timeFormat" type="text" aria-label="Enter Time Format" />
+                    <h3>Digital Settings</h3>
 
-                <button id="btnTimeLegend">Show Legend</button>
-                <table id="tblTimeLegend" class="hidden">
-                    <caption>Legend</caption>
-                    <thead>
-                        <tr>
-                            <td>Key</td>
-                            <td>Name</td>
-                            <td>Sample</td>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <td colspan="3">
-                                <p>Note - moment is used for formatting, this is a small sample of available formats, see <a href="http://momentjs.com/docs/#/displaying/format/">MomentJS docs</a></p>
-                            </td>
-                        </tr>
-                    </tfoot> 
-                    <tbody class="table-body" data-win-control="WinJS.UI.Repeater" data-win-options="{data: MomentOptions.time}">
-                        <tr class="table-body-row">
-                            <td data-win-bind="textContent: key"></td>
-                            <td data-win-bind="textContent: name"></td>
-                            <td data-win-bind="textContent: sample"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <label for="txtDateFormat">Date Format</label>
+                    <input id="txtDateFormat" data-win-bind="value: dateFormat Converters.test" type="text" aria-label="Enter Date Format" />
+                    
+                    <label for="txtTimeFormat">Time Format</label>
+                    <input id="txtTimeFormat" data-win-bind="value: timeFormat Converters.test" type="text" aria-label="Enter Time Format" />
+
+                    <p>Note - moment is used for formatting. For a list of all formats, see <a href="http://momentjs.com/docs/#/displaying/format/">MomentJS docs</a></p>
+
+                    <h3>Font Color</h3>
+                    <div id="colorPicker-digitalForeColor"></div>
+
+                    <h3>Background Color</h3>
+                    <div id="colorPicker-digitalBackColor"></div>
+
+                </div>
 
             </div>
         </div>
     </div>
-
-    <div data-win-control="WinJS.UI.SettingsFlyout" data-win-options="{settingsCommandId:'colorSettings'}">
-        <div class="win-ui-dark win-header">
-            <button type="button" onclick="WinJS.UI.SettingsFlyout.show()" class="win-backbutton"></button>
-            <div class="win-label">Colors</div>
-        </div>
-        <div class="win-ui-dark win-content">
-            <div class="win-settings-section">
-                <h3>Font Color</h3>
-                <div id="colorPicker-foreColor"></div>
-                <h3>Background Color</h3>
-                <div id="colorPicker-backColor"></div>
-                <button id="btnColorDefaults">Restore Defaults</button>
-            </div>
-        </div>
-    </div>
-
+    
 </body>
 </html>

@@ -5,6 +5,9 @@
 .colorPicker .oned, .colorPicker .oned .bg { height: 100px; }
 .colorPicker .oned, .colorPicker .oned .bg, .colorPicker .oned .pointer .shape { width: 20px; }
 
+.win-settingsflyout .win-content .win-settings-section input[type="radio"] {
+    vertical-align: text-bottom;
+}
 
 /* default styles from dark-ui are trolling me.*/
 .colorPicker .extras label {
@@ -20,4 +23,8 @@
 
 .colorPicker .extras .hex input {
     width: 80px !important;
+}
+
+.colorPicker .twod {
+    position: relative;
 }

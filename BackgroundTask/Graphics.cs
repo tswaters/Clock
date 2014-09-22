@@ -80,8 +80,8 @@ namespace BackgroundTask
             }
 
             // create image and strokes/formats/etc
-            var foreColor = HexToColor(getSettingColor("foreColor", "#fff"));
-            var backColor = HexToColor(getSettingColor("backColor", "#000"));
+            var foreColor = HexToColor(getSettingColor("digitalForeColor", "#fff"));
+            var backColor = HexToColor(getSettingColor("digitalBackColor", "#000"));
             var _wicBitmap = new Bitmap(_wicFactory, width, height, _pixelFormat, BitmapCreateCacheOption.CacheOnLoad);
             var _renderTarget = new WicRenderTarget(_dddFactory, _wicBitmap, _renderTargetProperties)
             {

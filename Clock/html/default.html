@@ -7,32 +7,26 @@
     <link href="/css/default.css" rel="stylesheet" />
     <script src="//Microsoft.WinJS.2.0/js/base.js"></script>
     <script src="//Microsoft.WinJS.2.0/js/ui.js"></script>
+    <script src="/js/vendor/lodash.min.js"></script>
     <script src="/js/vendor/moment.min.js"></script>
     <script src="/js/default.js"></script>
     <script src="/js/navigator.js"></script>
+    <script src="/js/classes/converters.js"></script>
     <script src="/js/classes/settings.js"></script>
     <script src="/js/classes/clock.js"></script>
     <script src="/js/classes/taskHandler.js"></script>
 </head>
 <body>
     <div id="contenthost" data-win-control="Application.PageControlNavigator"
-         data-win-options="{home: '/html/clock.html'}"></div>
+         data-win-options="{home: '/html/digital.html'}"></div>
     <div id="appBar" data-win-control="WinJS.UI.AppBar" data-win-options="">
         <button data-win-control="WinJS.UI.AppBarCommand"
                 data-win-options="{
-                        id:'cmdDateFormatSettings',
-                        label: 'Date Formats',
-                        icon:'settings',
-                        section:'global',
-                        tooltip:'Date Formats'
-                    }"></button>
-        <button class="icon-paint" data-win-control="WinJS.UI.AppBarCommand"
-                data-win-options="{
-                        id:'cmdColorSettings',
-                        label: 'Color Settings',
-                        icon:'color',
-                        section:'global',
-                        tooltip:'Color Settings'
+                        id:'cmdGeneralSettings',
+                        label: 'Settings',
+                        icon: 'settings',
+                        section: 'global',
+                        tooltip: 'General Settings'
                     }"></button>
     </div>
 </body>

@@ -7,28 +7,21 @@
     var nav = WinJS.Navigation;
     var sched = WinJS.Utilities.Scheduler;
     var ui = WinJS.UI;
-
     
-
     var page = ui.Pages.define("/html/default.html", {
         ready: function () {
 
             // attach handlers to the settings app buttons
-            document.getElementById('cmdDateFormatSettings').onclick = function () {
-                ui.SettingsFlyout.showSettings('dateFormatSettings', '/html/settings.html');
+            document.getElementById('cmdGeneralSettings').onclick = function () {
+                ui.SettingsFlyout.showSettings('generalSettings', '/html/settings.html');
             };
 
-            // attach handlers to the settings app buttons
-            document.getElementById('cmdColorSettings').onclick = function () {
-                ui.SettingsFlyout.showSettings('colorSettings', '/html/settings.html');
-            };
         }
     })
 
     app.addEventListener('settings', function (e) {
         e.detail.applicationcommands = {
-            "dateFormatSettings": { "title": "Formats", "href": "/html/settings.html" },
-            "colorSettings": { "title": "Colors", "href": "/html/settings.html" }
+            "generalSettings": { "title": "Settings", "href": "/html/settings.html" }
         };
         ui.SettingsFlyout.populateSettings(e);
     });
@@ -41,25 +34,26 @@
                 // Application has been reactivated from suspension.
             }
             
-            // register the background tasks.
+            // if the user grants access to use background tasks and lock screen, register the tasks.
             background.BackgroundExecutionManager.requestAccessAsync().then(function (status) {
                 if (status === background.BackgroundAccessStatus.allowedMayUseActiveRealTimeConnectivity
-                    || status === background.BackgroundAccessStatus.allowedWithAlwaysOnRealTimeConnectivity) {
+                 || status === background.BackgroundAccessStatus.allowedWithAlwaysOnRealTimeConnectivity) {
                     TaskHandler.registerTasks();
                 }
             });
             
+            // perform an immediete update to the live tile.
             BackgroundTask.Notification.addTilesToScheduleAsync(new Date(), 15);
-
-            //TileNotification.updateTile();
-
+            
             nav.history = app.sessionState.history || {};
             nav.history.current.initialPlaceholder = true;
+
+            var navLocation = Settings.showAnalog ? "/html/analog.html" : "/html/digital.html";
 
             // Optimize the load of the application and while the splash screen is shown, execute high priority scheduled work.
             ui.disableAnimations();
             var p = ui.processAll().then(function () {
-                return nav.navigate(nav.location || Application.navigator.home, nav.state);
+                return nav.navigate(navLocation, nav.state);
             }).then(function () {
                 return sched.requestDrain(sched.Priority.aboveNormal + 1);
             }).then(function () {

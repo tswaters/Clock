@@ -1,0 +1,15 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Clock</title>
+    <script src="/js/pages/digital.js"></script>
+</head>
+<body>
+    <section data-win-control="WinJS.UI.ViewBox" data-win-bind="style.backgroundColor: digitalBackColor">
+        <div id="clock">
+            <div id="date" data-win-bind="innerHTML: date; style.color: digitalForeColor"></div>
+            <div id="time" data-win-bind="innerHTML: time; style.color: digitalForeColor"></div>
+        </div>
+    </section>
+</body>
+</html>
