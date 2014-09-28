@@ -10,6 +10,8 @@ using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
 using Windows.Storage;
 
+using Logging;
+
 namespace BackgroundTask
 {
     /// <summary>
@@ -42,11 +44,13 @@ namespace BackgroundTask
             {
                 return Task.Run(async () =>
                 {
+                    Logger.WriteLine("AddTilesToScheduleAsync task started.");
                     TileUpdater updater = TileUpdateManager.CreateTileUpdaterForApplication();
 
                     // remove all existing scheduled notifications.
-                    var items = updater.GetScheduledTileNotifications();
-                    foreach(var item in items) {
+                    foreach (var item in updater.GetScheduledTileNotifications())
+                    {
+                        Logger.WriteLine("Removing queue item that ran from {0} to {1}", item.DeliveryTime.TimeOfDay, item.ExpirationTime);
                         updater.RemoveFromSchedule(item);
                     }
                     
@@ -72,6 +76,7 @@ namespace BackgroundTask
             var tileXml = await GetNotificationXml(delivery, fileNum);
             var tile = new TileNotification(tileXml);
             tile.ExpirationTime = delivery.AddMinutes(1);
+            Logger.WriteLine("Creating file #{0}, from {1} to {2}", fileNum, delivery.TimeOfDay, delivery.AddMinutes(1).TimeOfDay);
             return tile;
         }
 
@@ -85,6 +90,7 @@ namespace BackgroundTask
             var tileXml = await GetNotificationXml(delivery, fileNum);
             var tile = new ScheduledTileNotification(tileXml, delivery);
             tile.ExpirationTime = delivery.AddMinutes(1);
+            Logger.WriteLine("Creating file #{0}, from {1} to {2}", fileNum, delivery.TimeOfDay, delivery.AddMinutes(1).TimeOfDay);
             return tile;
         }
 

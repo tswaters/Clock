@@ -1,6 +1,7 @@
 ﻿(function () {
     "use strict";
 
+    var log = Logging.Logger;
     var activation = Windows.ApplicationModel.Activation;
     var background = Windows.ApplicationModel.Background;
     var app = WinJS.Application;
@@ -29,6 +30,8 @@
     app.addEventListener('activated', function (args) {
         if (args.detail.kind === activation.ActivationKind.launch) {
             
+            log.writeLine("Application activated.");
+
             // if the user grants access to use background tasks and lock screen, register the tasks.
             background.BackgroundExecutionManager.requestAccessAsync().then(function (status) {
                 if (status === background.BackgroundAccessStatus.allowedMayUseActiveRealTimeConnectivity
